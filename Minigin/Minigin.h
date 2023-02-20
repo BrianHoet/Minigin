@@ -2,6 +2,8 @@
 #include <string>
 #include <functional>
 
+#include "InputManager.h"
+
 namespace dae
 {
 	class Minigin
@@ -16,4 +18,5 @@ namespace dae
 		Minigin& operator=(const Minigin& other) = delete;
 		Minigin& operator=(Minigin&& other) = delete;
 	};
+
 }
