@@ -1,42 +1,44 @@
 #include "Scene.h"
 #include "GameObject.h"
 
-using namespace dae;
-
-unsigned int Scene::m_idCounter = 0;
-
-Scene::Scene(const std::string& name) : m_name(name) {}
-
-Scene::~Scene() = default;
-
-void Scene::Add(std::shared_ptr<GameObject> object)
+namespace dae
 {
-	m_objects.emplace_back(std::move(object));
-}
 
-void Scene::Remove(std::shared_ptr<GameObject> object)
-{
-	m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
-}
+	unsigned int Scene::m_idCounter = 0;
 
-void Scene::RemoveAll()
-{
-	m_objects.clear();
-}
+	Scene::Scene(const std::string& name) : m_name(name) {}
 
-void Scene::Update()
-{
-	for(auto& object : m_objects)
+	Scene::~Scene() = default;
+
+	void Scene::Add(std::shared_ptr<GameObject> object)
 	{
-		object->Update();
+		m_objects.emplace_back(std::move(object));
 	}
-}
 
-void Scene::Render() const
-{
-	for (const auto& object : m_objects)
+	void Scene::Remove(std::shared_ptr<GameObject> object)
 	{
-		object->Render();
+		m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
+	}
+
+	void Scene::RemoveAll()
+	{
+		m_objects.clear();
+	}
+
+	void Scene::Update()
+	{
+		for (auto& object : m_objects)
+		{
+			object->Update();
+		}
+	}
+
+	void Scene::Render() const
+	{
+		for (const auto& object : m_objects)
+		{
+			object->Render();
+		}
 	}
 }
 

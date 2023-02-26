@@ -2,23 +2,49 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
+#include <algorithm>
 
-dae::GameObject::~GameObject() = default;
-
-void dae::GameObject::Update(){}
-
-void dae::GameObject::Render() const
+void GameObject::Update()
 {
-	const auto& pos = m_transform.GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+	for (std::shared_ptr<BaseComponent> pComponent : m_Components)
+	{
+		pComponent->Update();
+	}
 }
 
-void dae::GameObject::SetTexture(const std::string& filename)
+void GameObject::Render() const
 {
-	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
+	for (std::shared_ptr<BaseComponent> pComponent : m_Components)
+	{
+		pComponent->Render();
+	}
 }
 
-void dae::GameObject::SetPosition(float x, float y)
+void GameObject::SetPosition(float x, float y)
 {
-	m_transform.SetPosition(x, y, 0.0f);
+	m_Transform.SetPosition(x, y, 0.0f);
+}
+
+dae::Transform GameObject::GetTransform() const
+{
+	return m_Transform;
+}
+
+void GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
+{
+	m_Components.push_back(component);
+}
+
+std::shared_ptr<BaseComponent> GameObject::GetComponent(std::shared_ptr<BaseComponent> component)
+{
+	return 0;
+}
+
+void GameObject::RemoveComponent(std::shared_ptr<BaseComponent> component)
+{
+	m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), component), m_Components.end());
+}
+
+GameObject::~GameObject()
+{
 }

@@ -11,6 +11,7 @@ namespace dae
 	{
 	public:
 		_TTF_Font* GetFont() const;
+		void SetFontSize(unsigned int size) const;
 		explicit Font(const std::string& fullPath, unsigned int size);
 		~Font();
 
