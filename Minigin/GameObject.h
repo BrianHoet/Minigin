@@ -7,10 +7,8 @@
 #include "Transform.h"
 #include "BaseComponent.h"
 
-
-
-using namespace dae;
-
+namespace dae
+{
 
 	class BaseComponent;
 
@@ -39,3 +37,4 @@ using namespace dae;
 		Transform m_Transform{};
 		std::vector<std::shared_ptr<BaseComponent>> m_Components;
 	};
+}

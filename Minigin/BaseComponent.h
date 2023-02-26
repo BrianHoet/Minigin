@@ -2,7 +2,8 @@
 #include "GameObject.h"
 #include "Transform.h"
 
-using namespace dae;
+namespace dae
+{
 
 
 	class BaseComponent
@@ -27,3 +28,4 @@ using namespace dae;
 		bool m_needsUpdate;
 		Transform m_Transform;
 	};
+}
