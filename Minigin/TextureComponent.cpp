@@ -3,22 +3,25 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 
-TextureComponent::TextureComponent()
+namespace dae
 {
-}
 
-void TextureComponent::Update()
-{
-}
+	TextureComponent::TextureComponent(GameObject* owner)
+	{
+		m_pOwner = owner;
+	}
 
-void TextureComponent::Render() const
-{
-	//const auto& pos = m_OwnerOfComponent.GetTransform().GetPosition();
-	dae::Renderer::GetInstance().RenderTexture(*m_Texture, m_Transform.GetPosition().x, m_Transform.GetPosition().y);
-	
-}
+	void TextureComponent::Update(float)
+	{
+	}
 
-void TextureComponent::SetTexture(const std::string& filename)
-{
-	m_Texture = ResourceManager::GetInstance().LoadTexture(filename);
+	void TextureComponent::Render() const
+	{
+		dae::Renderer::GetInstance().RenderTexture(*m_Texture, m_pOwner->GetWorldPosition().x, m_pOwner->GetWorldPosition().y);
+	}
+
+	void TextureComponent::SetTexture(const std::string& filename)
+	{
+		m_Texture = ResourceManager::GetInstance().LoadTexture(filename);
+	}
 }

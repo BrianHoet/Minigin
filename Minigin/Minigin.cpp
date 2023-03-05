@@ -87,7 +87,9 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	const float fixedTimeStep{ 0.02f };
+	const float fixedTimeStepSec{ 0.02f };
+	const int desiredFPS{ 60 };
+	const int frameTimeMs{ 1000 / desiredFPS };
 
 	bool doContinue = true;
 	auto lastTime = std::chrono::high_resolution_clock::now();
@@ -95,15 +97,19 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	while (doContinue)
 	{
 		const auto currentTime = std::chrono::high_resolution_clock::now();
-		const float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
+		const float deltaTimeSec = std::chrono::duration<float>(currentTime - lastTime).count();
 		lastTime = currentTime;
-		lag += deltaTime;
+		lag += deltaTimeSec;
 		doContinue = input.ProcessInput();
-		while (lag >= fixedTimeStep)
+		while (lag >= fixedTimeStepSec)
 		{
-			sceneManager.Update();
-			lag -= fixedTimeStep;
+			sceneManager.FixedUpdate(fixedTimeStepSec); //fixed update
+			lag -= fixedTimeStepSec;
 		}
+		sceneManager.Update(deltaTimeSec);
 		renderer.Render();
+
+		const auto sleepTime = currentTime + std::chrono::milliseconds(frameTimeMs) - std::chrono::high_resolution_clock::now();
+		std::this_thread::sleep_for(sleepTime);
 	}
 }

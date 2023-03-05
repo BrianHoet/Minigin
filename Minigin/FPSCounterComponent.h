@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+
 #include "Transform.h"
 #include "BaseComponent.h"
 
@@ -9,12 +11,12 @@ namespace dae
 	class FPSCounterComponent final : public BaseComponent
 	{
 	public:
-		virtual void Update();
+		virtual void Update(float) override;
 		virtual void Render() const;
 
 		void SetText(const std::string& text);
 
-		FPSCounterComponent(const std::string& text, std::shared_ptr<Font> font);
+		FPSCounterComponent(const std::string& text, std::shared_ptr<Font> font, GameObject* owner);
 		virtual ~FPSCounterComponent() = default;
 		FPSCounterComponent(const FPSCounterComponent& other) = delete;
 		FPSCounterComponent(FPSCounterComponent&& other) = delete;

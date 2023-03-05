@@ -4,26 +4,27 @@
 #include "BaseComponent.h"
 #include "Texture2D.h"
 
-using namespace dae;
-
-class Texture2D;
-
-class TextureComponent: public BaseComponent
+namespace dae
 {
-public:
-	virtual void Update() override;
-	virtual void Render() const override;
 
-	void SetTexture(const std::string& filename);
+	class Texture2D;
 
-	explicit TextureComponent();
-	virtual ~TextureComponent() = default;
-	TextureComponent(const TextureComponent& other) = delete;
-	TextureComponent(TextureComponent&& other) = delete;
-	TextureComponent& operator=(const TextureComponent& other) = delete;
-	TextureComponent& operator=(TextureComponent&& other) = delete;
+	class TextureComponent : public BaseComponent
+	{
+	public:
+		virtual void Update(float) override;
+		virtual void Render() const override;
 
-private:
-	std::shared_ptr<dae::Texture2D> m_Texture{};
-};
+		void SetTexture(const std::string& filename);
 
+		TextureComponent(GameObject* owner);
+		virtual ~TextureComponent() = default;
+		TextureComponent(const TextureComponent& other) = delete;
+		TextureComponent(TextureComponent&& other) = delete;
+		TextureComponent& operator=(const TextureComponent& other) = delete;
+		TextureComponent& operator=(TextureComponent&& other) = delete;
+
+	private:
+		std::shared_ptr<dae::Texture2D> m_Texture{};
+	};
+}

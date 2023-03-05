@@ -1,10 +1,10 @@
 #pragma once
-#include "GameObject.h"
 #include "Transform.h"
+#include <memory>
 
 namespace dae
 {
-
+	class GameObject;
 
 	class BaseComponent
 	{
@@ -17,15 +17,15 @@ namespace dae
 		BaseComponent& operator=(BaseComponent&& other) = delete;
 
 
-		virtual void Update();
+		virtual void Update(float);
+		virtual void FixedUpdate(float);
 		virtual void Render() const;
-		void SetPosition(float x, float y);
 
 
 	private:
 
 	protected:
 		bool m_needsUpdate;
-		Transform m_Transform;
+		GameObject* m_pOwner{ nullptr };
 	};
 }

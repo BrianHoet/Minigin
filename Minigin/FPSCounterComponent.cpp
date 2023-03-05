@@ -5,14 +5,16 @@
 #include "Font.h"
 #include "Texture2D.h"
 #include <chrono>
+#include "GameObject.h"
 
-dae::FPSCounterComponent::FPSCounterComponent(const std::string& text, std::shared_ptr<Font> font)
+dae::FPSCounterComponent::FPSCounterComponent(const std::string& text, std::shared_ptr<Font> font, GameObject* owner)
 	:m_Text(text), m_Font(std::move(font)), m_TextTexture(nullptr)
 {
 	m_needsUpdate = true;
+	m_pOwner = owner;
 }
 
-void dae::FPSCounterComponent::Update()
+void dae::FPSCounterComponent::Update(float)
 {
 	if (m_needsUpdate)
 	{
@@ -58,7 +60,7 @@ void dae::FPSCounterComponent::Render() const
 {
 	if (m_TextTexture != nullptr)
 	{
-		Renderer::GetInstance().RenderTexture(*m_TextTexture, m_Transform.GetPosition().x, m_Transform.GetPosition().y);
+		Renderer::GetInstance().RenderTexture(*m_TextTexture, m_pOwner->GetWorldPosition().x, m_pOwner->GetWorldPosition().y);
 	}
 }
 

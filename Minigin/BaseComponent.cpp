@@ -1,11 +1,11 @@
 #include "BaseComponent.h"
+#include"GameObject.h"
 
 namespace dae
 {
 
 	BaseComponent::BaseComponent()
-		:m_needsUpdate{},
-		m_Transform{}
+		:m_needsUpdate{}
 	{
 	}
 
@@ -13,18 +13,16 @@ namespace dae
 	{
 	}
 
-	void BaseComponent::Update()
+	void BaseComponent::Update(float)
 	{
+	}
 
+	void BaseComponent::FixedUpdate(float)
+	{
 	}
 
 	void BaseComponent::Render() const
 	{
 
-	}
-
-	void BaseComponent::SetPosition(float x, float y)
-	{
-		m_Transform.SetPosition(x, y, 0.0f);
 	}
 }

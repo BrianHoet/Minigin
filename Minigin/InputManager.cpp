@@ -17,7 +17,7 @@ bool dae::InputManager::ProcessInput()
 		}
 		if (e.type == SDL_MOUSEBUTTONDOWN) 
 		{
-			std::cout << "Works";
+			
 		}
 		// etc...
 	}
